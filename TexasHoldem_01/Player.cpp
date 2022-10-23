@@ -148,3 +148,4 @@ ostream& operator<<(ostream& os, Player player)
 		return os;
 	}
 }
+//gg
