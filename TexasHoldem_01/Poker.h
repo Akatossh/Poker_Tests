@@ -1,31 +1,37 @@
 #pragma once
 #include <vector>
 #include <iostream>
-
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 #include "Player.h"
+#include "Deck.h"
 
-class Deck;
 class Card;
+class Deck;
 
+const int small_bet = 1;
+const int big_bet = 2;
 
 using namespace std;
 
-static class Poker
+class Poker
 {
+	
 	enum class Ranking;
 
 public: 
-
 	vector<Card> board{};
+	vector<Player> players;
 	int turn_id = 0;
-	int players;
-	int pool = 0;
+	int pool;
 
 	//void next_turn();
 	static float rank(vector<Card> cards);
 	static float rank(Player player);
 	static float rank(vector<Card> hand, vector<Card> board);
 	static float rank(vector<Card> hand, vector<Card> board, vector<Card> other_cards);
+
+	void initialization(int num);
 
 	friend ostream& operator<<(ostream& os, Ranking rank);
 
@@ -53,9 +59,8 @@ public:
 	};
 };
 
-
 void sort_cards(vector<Card>& cards);
-void sert_cards(Deck cards);
+void sort_cards(Deck cards);
 class Data;
 template<class T, class Fcn>
-static void Combination(vector<T>& collection, unsigned int offset, unsigned int k, Fcn fun);
+void Combination(vector<T>& collection, unsigned int offset, unsigned int k, Fcn fun);

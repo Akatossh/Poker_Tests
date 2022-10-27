@@ -41,6 +41,7 @@ public:
     void display();
     int size() { return cards.size(); };
 
+private:
     class iterator {
         Card* curr;
     public:
@@ -52,7 +53,9 @@ public:
         bool operator!=(const iterator& b) const { return curr != b.curr; };
     };
 
+public:
     iterator begin() { return &cards[0]; };
-    iterator end() { return &cards[cards.size()-1]; };
+    iterator end() { return &(*(cards.end()-1))+1; };
 };
+
 

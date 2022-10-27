@@ -3,7 +3,6 @@
 using namespace std;
 
 
-
 class Card
 {
     enum class Color;
@@ -22,6 +21,7 @@ public:
     bool operator==(Card card);
     bool operator!=(Card card);
     bool operator>(Card card);
+    bool operator<(Card card) const;
     bool operator>=(Card card);
     bool operator<(Card card);
     bool operator<=(Card card);
@@ -29,11 +29,11 @@ public:
 
     enum class Color
     {
-        none,
-        heart,
-        karo,
-        spade,
-        club
+        none = 0,
+        heart = 1,
+        karo = 2,
+        spade = 3,
+        club = 4
     };
 
     enum class Kind

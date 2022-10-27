@@ -22,6 +22,21 @@ static void Combination(vector<T>& collection, unsigned int offset, unsigned int
 	}
 }
 
+void Player::draw(Deck& deck)
+{
+	auto card = deck.draw();
+	cards.push_back(card);
+}
+
+void Player::draw(Deck& deck, int num)
+{
+	for (int i = 0; i != num; i++)
+	{
+		auto card = deck.draw();
+		cards.push_back(card);
+	}
+}
+
 void Player::draw(Card card)
 {
 	cards.push_back(card);
@@ -94,7 +109,6 @@ float Player::HandPotential(vector<Card> board)
 	vector<Card> remaining_cards;
 	for (auto& card : deck)
 		remaining_cards.push_back(card);
-	remaining_cards.push_back(deck.draw());
 
 	Combination(remaining_cards, 0, 2, [&](vector<Card> set) {
 
@@ -109,10 +123,9 @@ float Player::HandPotential(vector<Card> board)
 		deck2.remove(set);
 		deck2.remove(board);
 		vector<Card> remaining_cards_2;
-		for (auto card : deck2)
+		for (auto& card : deck2)
 			remaining_cards_2.push_back(card);
 		remaining_cards_2.push_back(deck2.draw());
-		
 
 		Combination(remaining_cards_2, 0, 5 - board.size(), [&](vector<Card> set2) {
 
@@ -126,15 +139,24 @@ float Player::HandPotential(vector<Card> board)
 			if (ourbest > oppbest) HP[index][ahead]++;
 			else if (ourbest == oppbest) HP[index][tied]++;
 			else HP[index][behind] ++;
-			});
-
 
 		});
 
-	float HPsumPpot = HPTotal[behind] + HPTotal[tied];
-	float Ppot = (HP[behind][ahead] + HP[behind][tied] / 2.0 + HP[tied][ahead]/2.0) / ((HPTotal[behind] + HPTotal[tied]) * HPsumPpot);
+	});
+
+	float Ppot = (HP[behind][ahead] + HP[behind][tied] / 2.0 + HP[tied][ahead]/2.0) / ((HPTotal[behind] + HPTotal[tied]));
 	//float Npot = 0.0;
 	return Ppot;
+}
+
+bool Player::add_to_pool(int points, int& pool)
+{
+	if (this->points < points) return false;
+
+	this->points -= points;
+	pool += points;
+
+	return true;
 }
 
 ostream& operator<<(ostream& os, Player player)
@@ -148,4 +170,3 @@ ostream& operator<<(ostream& os, Player player)
 		return os;
 	}
 }
-//gg
